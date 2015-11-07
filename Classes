@@ -1,0 +1,508 @@
+Board Class
+
+package Naval_Battleship;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class Board {
+
+/**Declare our variables*/
+ int rows = 0;
+ int columns = 0;
+ public Ships ships=new Ships();
+ Controller controller = new Controller();
+ 
+/**Setting up a 2D Ships Array*/
+public static Ships [][] board;
+
+/**constructor for setup the board*/ 
+public Board(int rows,int columns) 
+	{
+       board = new Ships[rows][columns];
+       this.rows=rows;
+       this.columns=columns;
+		}
+
+public void print(ArrayList<Ships> player)
+{
+       /**Empty array first*/
+       board=new Ships[rows][columns];
+
+       /**setup array*/
+for(Ships s:player)
+	{
+          board[s.getX()][s.getY()]=s;
+    
+		}
+       /**Display array using a FOR loop */
+       for(int i = 0; i<rows; i++)
+       {             
+    	   for(int j = 0; j<columns; j++)
+    	   		{
+    		   		ships=board[i][j];
+                    
+                     if(ships==null)
+                     {
+                            System.out.print("-");
+                            System.out.print("\t");
+                     }
+                     else
+                     {
+                     System.out.print(ships.getID());
+                     System.out.print("\t");
+                     }
+       }
+       System.out.println();
+       System.out.print("\n");
+ }     
+     /**Reads the user input*/ 
+       @SuppressWarnings("resource")
+	Scanner readinput = new Scanner(System.in);
+
+           String enterkey = "Please Press Enter key to Continue .....";
+           System.out.print(enterkey);
+
+           enterkey = readinput.nextLine();
+            System.out.print(enterkey);
+
+           if(enterkey.equals("")){
+
+               System.out.println("\n");
+               System.out.println("\n");
+               System.out.println("\n");
+               System.out.println("\n");
+               System.out.println("\n");
+               System.out.println("\n");
+               System.out.println("\n");
+               System.out.println("\n");
+               
+               
+              }
+      
+}
+}
+***********************************************************************************************************************
+Controller Class
+package Naval_Battleship;
+import java.io.IOException;
+import java.util.ArrayList;
+
+/**
+ * @author Kanyoza Mtonga
+ *
+ */
+/**Controller Class */
+public class Controller {
+/**Declare variables*/
+	
+public int row, col;
+/**2 Arrays are set for player 1 and player2*/
+ArrayList<Ships> player1=new ArrayList<Ships>();
+ArrayList<Ships> player2=new ArrayList<Ships>();
+
+String str=null;
+
+/** Exception
+ * 
+ * @throws IOException
+ */
+public void setup() throws IOException
+	{
+			System.out.println("Welcome to the Naval Battleship Game!!\n");
+	
+			System.out.println("The game is 6 x 11 board game represented by Y co-ordinates" + 
+				"\nand X co-ordinates." +
+				"\nThe first co-ordinates you always enter is the row, followed by the column." +
+				"\nThis is a two Player game which requires each player to enter their ship co-ordinates'." +
+				"\nMines are the first to be placed on the board." +
+				"\nPlease start off by defining the size of your board"+
+				"\nthen entering the starting co-ordinates of your mines followed by four ships." +
+				"\nMines are denoted by * symbol. Good luck!!");
+		
+		    System.out.println("\nPlease Define the size of the Board");
+
+/**Try Catch statement
+ * 
+ */
+try
+{
+    try
+    {
+/**Byte converts string to byte and byte to string
+ * Constructs a Byte object that represents the byte value indicated by the String parameter.
+ * 
+ */
+    	byte[] byt = new byte[512];
+        System.out.println("\nEnter rows:");
+        System.in.read(byt);
+        str = new String(byt);
+        row = Integer.parseInt(str.trim()); 
+        
+        System.out.println("\nEnter columns:");
+        System.in.read(byt);
+        str = new String(byt);
+        col = Integer.parseInt(str.trim());
+        
+        /**New Board is set*/
+        Board board = new Board(row,col);
+
+/**setup battleship for player 1
+ *   Reads user input    
+ */     
+        System.out.println("\nPlayer 1 Please take your turn:");
+ 
+        System.out.println("\nEnter Mine location:");
+
+        System.out.println("\nPlease Enter x position for your Mine:");
+        System.in.read(byt);
+        str = new String(byt);
+        row = Integer.parseInt(str.trim()); 
+
+        System.out.println("\nPlease Enter y position for your Mine:");
+        System.in.read(byt);
+        str = new String(byt);
+        col = Integer.parseInt(str.trim());
+
+        Ships M1 = new Ships();
+        M1.setID(M1.getShipName() + "1");
+        M1.setID("*");
+        M1.setType("Mines");
+        M1.setX(row);
+        M1.setY(col);
+        player1.add(M1);
+        board.print(player1); /** Player 1 is an arraylist of type ship and inserts the object into the array**/
+        
+        System.out.println("\nEnter Battleship location:");
+        
+        System.out.println("\nPlease Enter x position for your Battleship:");
+        System.in.read(byt);
+        str = new String(byt);
+        row = Integer.parseInt(str.trim()); 
+
+        System.out.println("\nPlease Enter y position for your Battleship:");
+        System.in.read(byt);
+        str = new String(byt);
+        col = Integer.parseInt(str.trim());
+
+        Ships B1 = new Ships();
+        B1.setID(B1.getShipName() + "1");
+        B1.setID("B1");
+        B1.setType("Battleship");
+        B1.setX(row);
+        B1.setY(col);
+        player1.add(B1);
+        board.print(player1);
+        
+        System.out.println("\nEnter Destroyer location:");
+
+        System.out.println("\nPlease Enter x position for your Destroyer:");
+        System.in.read(byt);
+        str = new String(byt);
+        row = Integer.parseInt(str.trim()); 
+
+        System.out.println("\nPlease Enter y position for your Destroyer:");
+        System.in.read(byt);
+        str = new String(byt);
+        col = Integer.parseInt(str.trim());
+
+        Ships D1=new Ships();
+        D1.setID(D1.getShipName() + "1");
+        D1.setID("D1");
+        D1.setType("Destroyer");
+        D1.setX(row);
+        D1.setY(col);
+        player1.add(D1);
+        board.print(player1);
+        
+        System.out.println("\nEnter Submarine location:");
+        
+        System.out.println("\nPlease Enter x position for your Submarine:");
+        System.in.read(byt);
+        str = new String(byt);
+        row = Integer.parseInt(str.trim()); 
+
+        System.out.println("\nPlease Enter y position for your Submarine:");
+        System.in.read(byt);
+        str = new String(byt);
+        col = Integer.parseInt(str.trim());
+
+        Ships S1 = new Ships();
+        S1.setID(S1.getShipName() + "1");
+        S1.setID("S1");
+        S1.setType("Submarine");
+        S1.setX(row);
+        S1.setY(col);
+        player1.add(S1);
+        board.print(player1);
+        
+        System.out.println("\nEnter Minesweeper location");
+       
+        System.out.println("\nPlease Enter x position for your Minesweeper:");
+        System.in.read(byt);
+        str = new String(byt);
+        row = Integer.parseInt(str.trim()); 
+
+        System.out.println("\nPlease Enter y position for your Minesweeper:");
+        System.in.read(byt);
+        str = new String(byt);
+        col = Integer.parseInt(str.trim());
+
+        Ships MS1 = new Ships();
+        MS1.setID(MS1.getShipName() + "1");
+        MS1.setID("M1");
+        MS1.setType("Minesweeper");
+        MS1.setX(row);
+        MS1.setY(col);
+        player1.add(MS1);
+        System.out.println("\nPlayer 1 coordinates are as follows:");
+        board.print(player1);
+
+        /**Player 2 inputs ships
+         *         
+         */
+       
+        System.out.println("\nPlayer 2 Please take your turn:");
+        
+        System.out.println("Enter Mines location: \n");
+        
+        System.out.println("\nPlease Enter x position for your Mines:");
+        System.in.read(byt);
+        str = new String(byt);
+        row = Integer.parseInt(str.trim()); 
+
+        System.out.println("\nPlease Enter y position for your Mines:");
+        System.in.read(byt);
+        str = new String(byt);
+        col = Integer.parseInt(str.trim());
+
+        Ships M2 = new Ships();
+        M2.setID(M2.getShipName() + "1");
+        M2.setID("*");
+        M2.setType("Mines");
+        M2.setX(row);
+        M2.setY(col);
+        player2.add(M2);
+        board.print(player2);
+        
+        System.out.println("\nEnter Battleship Location");
+
+        System.out.println("\nPlease Enter x position for your Battleship:");
+        System.in.read(byt);
+        str = new String(byt);
+        row = Integer.parseInt(str.trim()); 
+
+        System.out.println("\nPlease Enter y position for your Battleship:");
+        System.in.read(byt);
+        str = new String(byt);
+        col = Integer.parseInt(str.trim());
+        
+        Ships B2 = new Ships();
+        B2.setID(B2.getShipName() + "1");
+        B2.setID("B2");
+        B2.setType("Battleship");
+        B2.setX(row);
+        B2.setY(col);
+        player2.add(B2);
+        board.print(player2);
+        
+        System.out.println("Enter Destroyer Location\n");
+
+        System.out.println("\nPlease Enter x position for your Destroyer:");
+        System.in.read(byt);
+        str = new String(byt);
+        row = Integer.parseInt(str.trim()); 
+
+        System.out.println("\nPlease Enter y position for your Destroyer:");
+        System.in.read(byt);
+        str = new String(byt);
+        col = Integer.parseInt(str.trim());
+
+        Ships D2=new Ships();
+        D2.setID(D2.getShipName() + "1");
+        D2.setID("D2");
+        D2.setType("Destroyer");
+        D2.setX(row);
+        D2.setY(col);
+        player2.add(D2);
+        board.print(player2);
+        
+        System.out.println("Enter Submarine Location\n");
+    
+        System.out.println("\nPlease Enter x position for your Submarine:");
+        System.in.read(byt);
+        str = new String(byt);
+        row = Integer.parseInt(str.trim()); 
+
+        System.out.println("\nPlease Enter y position for your Submarine:");
+        System.in.read(byt);
+        str = new String(byt);
+        col = Integer.parseInt(str.trim());
+        
+        Ships S2 = new Ships();
+        S2.setID(S2.getShipName() + "1");
+        S2.setID("S2");
+        S2.setType("Submarine");
+        S2.setX(row);
+        S2.setY(col);
+        player2.add(S2);
+        board.print(player2);
+
+        System.out.println("\nEnter Minesweeper Location:");
+   
+        System.out.println("\nPlease Enter x position for your Minesweeper:");
+        System.in.read(byt);
+        str = new String(byt);
+        row = Integer.parseInt(str.trim()); 
+
+        System.out.println("\nPlease Enter y position for your Minesweeper:");
+        System.in.read(byt);
+        str = new String(byt);
+        col = Integer.parseInt(str.trim());
+
+        Ships MS2 = new Ships();
+        MS2.setID(MS2.getShipName() + "1");
+        MS2.setID("M2");
+        MS2.setType("Minesweeper");
+        MS2.setX(row);
+        MS2.setY(col);
+        player2.add(MS2);
+        board.print(player2);
+        
+        System.out.println("Player 2 coordinates are as follows:");
+        board.print(player2);
+        
+        System.out.println("\nPlayer 1 please move your battleship:");
+        
+        System.out.println("\nPlease Enter x position for your Battleship:");
+        System.in.read(byt);
+        str = new String(byt);
+        row = Integer.parseInt(str.trim()); 
+
+        System.out.println("\nPlease Enter y position for your Battleship:");
+        System.in.read(byt);
+        str = new String(byt);
+        col = Integer.parseInt(str.trim());
+
+        Ships B3 = new Ships();
+        B3.setID("B1");
+        B3.setID(B3.getShipName() + "1");
+        B3.setType("Battleship");
+        B3.setX(row);
+        B3.setY(col);
+        player1.add(B3);
+        board.print(player1);
+        board.print(player2);
+       
+		}
+    /** Exception prevents an array for accessing an illegal index*/
+        catch(ArrayIndexOutOfBoundsException e)
+    		{
+       System.out.println("ILLEGAL MOVE!!!");
+    		}
+	 }
+	/** Exception prevents an illegal variable being entered*/
+    	catch(NumberFormatException e)
+    			{
+    	System.out.println("Please Enter a valid number");
+    			
+    				}
+			}
+	}
+**********************************************************************************************************************
+Runnable Class
+package Naval_Battleship;
+import java.io.IOException;
+/**
+ * 
+ * @author Kanyoza Mtonga
+ *
+ */
+/**Runnable initiates the Main Method 
+ * Main class throws a Input Output Exception*/
+public class runnable {
+
+	public static void main(String[] args) throws IOException {
+/**
+ * Sets up a new Controller class c within the Main Method
+ */
+Controller c =new Controller();
+c.setup();
+	}
+
+}
+
+************************************************************************************************************************
+Ships Class
+package Naval_Battleship;
+
+public class  Ships {
+	/**
+	 * @author Kanyoza Mtonga
+	 *
+	 */
+
+/**Declaring the ship Objects
+ * ID
+ * Type
+ * x
+ * y
+ **/
+
+public String ShipName;
+public String ID;
+public String Type;
+public int x,y;
+
+
+/**
+ * Getters and Setters
+ * @return
+ */
+    public String getID() {
+
+
+        return ID;
+    }
+
+    public void setID(String id) {
+
+        ID = id;
+    }
+
+    public String getType() {
+
+        return Type;
+    }
+
+    public void setType(String type) {
+
+        Type = type;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public String getShipName() {
+
+        return Type;
+    }
+
+    public void setShipName(String shipname) {
+
+        ShipName = shipname;
+    }
+	}
+*************************************************************************************************************************
